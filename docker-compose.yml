@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mydb
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data   # Map local pg-data/ folder to PostgreSQL data directory
+      - ./pg-log:/var/log/postgresql        # Map local pg-log/ folder to PostgreSQL logs directory
+      - ./pg-wal:/var/lib/postgresql/wal     # Map local pg-wal/ folder to PostgreSQL WAL logs directory
+    ports:
+      - "5432:5432"
+    restart: always
