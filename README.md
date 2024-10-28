@@ -2,17 +2,27 @@
 Provided raw car selling price data is cleansed, transformed to a star schema, and stored in a PostgreSQL 
 database hosted in a Docker container.
 
-### Description
-The goalds of this project are to
+## Table of Contents
+1. [Description](#1-description)
+2. [Setup](#2-setup)
+3. [Raw Data](#3-raw-data)
+4. [Star Schema Design](#4-star-schema-design)
+5. [Data Cleansing and Transforming](#5-data-cleansing-and-transforming)
+6. [Problem and Solution](#6-problem-and-solution)
+7. [Extension and Open Questions](#7-extension-and-open-questions)
+
+
+## 1. Description
+The goals of this project are to
 - Set up a PostgreSQL database within a Docker container, managed via a docker-compose file
 - Design and implement a star schema from raw data, creating optimized data tables
 - Cleanse and populate tables with transformed raw data
 
-### Setup
+## 2. Setup
 bitnami/postgresql Docker image is used to run PostgreSQL container.
 Project's folders are mapped to PostgreSQL data directory, logs directory, and WAL logs directory.
 
-### Raw Data
+## 3. Raw Data
 Same [data source](https://github.com/khoadangnguyen/CarSaleTransactionAnalysis/blob/main/data/carprices.zip) is utilized for this project.
 Below is an example of the data format:
 ```yaml
@@ -25,7 +35,7 @@ year,make,model,trim,body,transmission,vin,state,condition,odometer,color,interi
 This raw data set includes 500,000 car sale transactions, covering 96 car makes, 972 models, and 1,963 trims spanning
 the years from 1982 to 2015.
 
-### Star Schema Design
+## 4. Star Schema Design
 Based on the raw data format, data is organized into one fact table, **FactSellingPrice**, and three dimension tables:
 **DimCar**, **DimSeller**, and **DimDate**.
 
@@ -92,7 +102,24 @@ Design for **FactSellingPrice** table:
 | `odometer` | INTEGER |             |              |
 | `mmr` | INTEGER |             |              |
 | `sellingprice` | INTEGER |             |              |
-> Note: FactSellingPrice can also have primary key id column, but for the scope of thie project it is not needed
+> Note: FactSellingPrice can also have primary key id column, but for the scope of this project it is not needed
 
+## 5. Data Cleansing and Transforming 
+[to be delivered]
 
-### Data Cleansing and Transforming 
+## 6. Problem and Solution
+### Performance issue with data inserting
+The **FactSellingPrice** table initially faced performance issues during data insertion when the table was pre-created 
+with FOREIGN KEY constraints, and data was populated via INSERT statements. With over 500k rows to insert, this approach 
+consistently failed to complete within 30 minutes.
+##### Solution attempts:
+1. Remove Foreign Key Constraints: The first attempt involved removing FOREIGN KEY constraints in the table creation. 
+This change provided minimal improvement, reducing the insertion time slightly, but it still could not complete in under 20 minutes.
+2. Batch Insertions: The next approach was to break the 500k rows into smaller batches of 100k and insert each batch separately. 
+This resulted in better performance, reducing insertion time to around 15 minutes on average per batch, with a total time just under 20 minutes
+3. Create Table from data: The third and most successful solution was to create the table directly from the data without
+predefined schema and constraints. After data insertion, the table was then modified to align with the desired schema. 
+This approach significantly improved performance, completing the insertion of over 500k rows in under 3 seconds.
+
+## 7. Extension and Open Questions
+[to be delivered]
