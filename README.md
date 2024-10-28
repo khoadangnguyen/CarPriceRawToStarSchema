@@ -26,6 +26,29 @@ This raw data set includes 500,000 car sale transactions, covering 96 car makes,
 the years from 1982 to 2015.
 
 ### Star Schema Design
+Based on the raw data format, data is organized into one fact table, **FactSellingPrice**, and three dimension tables:
+**DimCar**, **DimSeller**, and **DimDate**.
+
+Design for **DimDate** table:
+
+| Column Name | Data Type                       | Constraint  | 
+| ----------- |---------------------------------| ----------- |
+| `id`        | SERIAL                          | PRIMARY KEY |
+ | `datetime` | TIMESTAMP WITH TIME ZONE UNIQUE |
+ | `year` | SMALLINT                        | |
+ | `quarter` | SMALLINT                        | |
+ | `quartername` | VARCHAR(2)                      | |
+ | `month` | SMALLINT                        | |
+ | `monthname` | VARCHAR(9)                      | |
+ | `week` | SMALLINT                        | |
+ | `day` | SMALLINT                        | |
+ | `dayofweek` | SMALLINT                        | |
+ | `dayname` | VARCHAR(9)                      | |
+ | `date` | DATE                            | |
+ | `time` | TIME                            | |
+ | `hour` | SMALLINT                        | |
+ | `minute` | SMALLINT | |
+ | `second` | SMALLINT | |
 
 
 ### Data Cleansing and Transforming 
