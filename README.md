@@ -51,4 +51,48 @@ Design for **DimDate** table:
  | `second` | SMALLINT | |
 
 
+
+Design for **DimSeller** table:
+
+| Column Name | Data Type                       | Constraint  | Description                              |
+| ----------- |---------------------------------|-------------|------------------------------------------|
+ | `id` | SERIAL | PRIMARY KEY |                                          |
+ | `sellername` | TEXT | UNIQUE      |                                          |
+ | `stateshort` | VARCHAR(2) | UNIQUE      |                                          |
+ | `statefull` | VARCHAR(50) |             |                                          |
+ | `area` | VARCHAR(25) |             | 'state' for US and 'province' for Canada |
+ | `country` | VARCHAR(50) | UNIQUE |                                          |
+
+
+
+Design for **DimCar** table:
+
+| Column Name                 | Data Type     | Constraint  |
+|-----------------------------|---------------| ----------- |
+| `id`                        | SERIAL        | PRIMARY KEY |
+| `vin` | VARCHAR(17)   | UNIQUE    |
+| `make` | VARCHAR(50)   |             |
+| `model` | VARCHAR(75)   | |
+| `year` | INTEGER       | |
+| `trim` | VARCHAR(100)  | |
+| `body` | VARCHAR(50) | |
+| `transmission` | VARCHAR(25) | |
+| `color` | VARCHAR(25) | |
+| `interior` | VARCHAR(25) | |
+
+
+Design for **FactSellingPrice** table:
+
+| Column Name                 | Data Type     | Constraint  | Reference    |
+|-----------------------------|---------------|-------------|--------------|
+| `carid` | INTEGER | Foreign Key | DimCar(id)   |
+| `sellerid` | INTEGER | Foreign Key | DimSeller(id) |
+| `dateid` | INTEGER | Foreign Key | DimDate(id)  |
+| `condition` | INTEGER |             |              |
+| `odometer` | INTEGER |             |              |
+| `mmr` | INTEGER |             |              |
+| `sellingprice` | INTEGER |             |              |
+> Note: FactSellingPrice can also have primary key id column, but for the scope of thie project it is not needed
+
+
 ### Data Cleansing and Transforming 
