@@ -79,7 +79,7 @@ VALUES
 CREATE TABLE DimSeller (
 	id SERIAL PRIMARY KEY,
 	sellername TEXT,
-    stateshort CHAR(2),
+    stateshort VARCHAR(2),
     statefull VARCHAR(50),
 	area VARCHAR(25),
 	country VARCHAR(50),
