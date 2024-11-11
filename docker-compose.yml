@@ -1,15 +1,13 @@
 services:
   postgres:
     image: bitnami/postgresql:latest
+    user: root # must grant root user for accessing data directory below
     container_name: my_postgres
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
-      - ./pg-data:/var/lib/postgresql/data   # Map local pg-data/ folder to PostgreSQL data directory
-      - ./pg-log:/var/log/postgresql        # Map local pg-log/ folder to PostgreSQL logs directory
-      - ./pg-wal:/var/lib/postgresql/wal     # Map local pg-wal/ folder to PostgreSQL WAL logs directory
+      - ./pg-data:/bitnami/postgresql # Map local ./pg-data folder to PostgreSQL data directory for persisting data when restarting
     ports:
       - "5432:5432"
-    restart: always

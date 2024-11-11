@@ -22,4 +22,5 @@ CREATE TABLE car_price_raw (
     saledate TEXT);
 
 -- Load data from csv to car_price_raw
+-- Note: psql must run from the project folder for ./data directory to be accessible
 \copy car_price_raw FROM './data/car_prices.csv' DELIMITER ',' CSV HEADER;
