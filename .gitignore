@@ -3,3 +3,4 @@
 /pg-log
 /pg-wal
 /data
+/.env
