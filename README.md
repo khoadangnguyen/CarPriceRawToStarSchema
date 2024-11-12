@@ -20,7 +20,7 @@ The goals of this project are to
 
 ## 2. Setup
 bitnami/postgresql Docker image is used to run PostgreSQL container.
-Project's folders are mapped to PostgreSQL data directory, logs directory, and WAL logs directory.
+Project's folders are mapped to PostgreSQL data directory for persisting data to disk.
 
 ## 3. Raw Data
 Same [data source](https://github.com/khoadangnguyen/CarSaleTransactionAnalysis/blob/main/data/carprices.zip) is utilized for this project.
